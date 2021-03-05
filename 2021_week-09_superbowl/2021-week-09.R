@@ -34,13 +34,13 @@ criteria_brand <- youtube %>%
   arrange(criteria, desc(criteria_per)) %>% 
   mutate(
     criteria_label = recode(criteria,
-      "show_product_quickly" = "Shows product quickly",
-      "patriotic" = "Patriotic",
-      "funny" = "Contains humor",
-      "celebrity" = "Contains celebrity",
-      "danger" = "Contains danger",
-      "animals" = "Contains animals",
-      "use_sex" = "Uses sexuality"),
+      "show_product_quickly" = "Product glimpse",
+      "patriotic" = "Ammurica",
+      "funny" = "Lololol",
+      "celebrity" = "Celebrity sighting",
+      "danger" = "Yikes! Danger!",
+      "animals" = "It's a zoo",
+      "use_sex" = "Ooo, sexy"),
     brand_order = row_number(),
     brand_label = ifelse(brand_order <= 3, brand, "")) %>% 
   group_by(criteria_label) %>% 
@@ -61,7 +61,7 @@ criteria_brand %>%
   geom_point(aes(y = criteria_per), alpha = 0) +
   geom_segment(
     aes(xend = brand_order, y = 0, yend = criteria_per),
-    size = 5, lineend = "round", show.legend = F) +
+    size = 5.5, lineend = "round", show.legend = F) +
   facet_wrap(vars(criteria_label), scales = "free_x", ncol = 3, dir = "v", strip.position = "bottom") +
   geom_text(
     aes(label = round(criteria_per, 0), y =ifelse(criteria_per > 0, criteria_per - 1, 0)),
@@ -69,16 +69,14 @@ criteria_brand %>%
   geom_text(
     aes(label = brand_label, y = criteria_per + 8),
     hjust = 0, family = "mont", size = 8, fontface = "bold", angle = 30, show.legend = F) +
-  
-  
-  labs(y = "Ads featuring each theme (%)") +
+  labs(y = "Brands' ads featuring each theme (%)") +
   scale_color_manual(values = pal, name = "Brands") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 120)) +
   guides(color = guide_legend(override.aes = list(alpha = 1, size = 5))) +
   theme_void() +
   theme(
     text = element_text(family = "mont"),
-    strip.text = element_text(family = "robo", size = 25, face = "bold", margin = margin(t = 7, b = 2)),
+    strip.text = element_text(family = "robo", size = 30, face = "bold", margin = margin(t = 7, b = 2)),
     strip.placement = "outside",
     panel.spacing.x = unit(.5, "cm"),
     panel.spacing.y = unit(.5, "cm"),
@@ -90,11 +88,12 @@ criteria_brand %>%
     plot.margin = margin(rep(15, 4))) +
   plot_annotation(
     title = toupper("Super Bowl ad themes, 2000-2020"),
-    caption = "Source: FiveThirtyEight & superbowl-ads.com  |  Viz: Xin Yuen @so_xinteresting",
+    caption = "Source: FiveThirtyEight & superbowl-ads.com  |  Viz: Xin Yuen @so_xinteresting  |  #TidyTuesday",
     theme = theme(
-      plot.title = element_text(family = "robo", face = "bold", size = 75, margin = margin(t = 5, b = -7)),
+      plot.title = element_text(family = "robo", face = "bold", size = 75, margin = margin(t = 5)),
       plot.caption = element_text(family = "robo", size = 20, hjust = .5, color = "gray41", margin = margin(t = -5))))
 
 
 
 ggsave("2021-week-09-superbowl.png", width = 7, height = 8, units = "in")
+
