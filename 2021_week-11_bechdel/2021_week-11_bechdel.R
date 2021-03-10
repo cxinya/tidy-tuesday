@@ -48,7 +48,7 @@ genre_bechdel <- genre_bechdel %>%
 
 # Viz ---------------------------------------------------------------------
 
-pal <- c("#f4a261","#e9c46a","#2a9d8f","#264653")
+pal <- c("#e76f51","#f4a261","#2a9d8f","#264653")
 
 
 genre_bechdel %>% ggplot() +
@@ -63,26 +63,26 @@ genre_bechdel %>% ggplot() +
   theme_void() +
   theme(
     text = element_text(family = "robo"),
-    plot.margin = margin(b = -5, r = 25, l = 25),
+    plot.margin = margin(b = 5, r = 25, l = 25),
     plot.background = element_rect(fill = "#dee3e3", color = NA),
-    strip.text = element_text(face = "bold", size = 34, margin = margin(t = 7), lineheight = .3, vjust = 1),
+    strip.text = element_text(face = "bold", size = 30, margin = margin(t = 7), lineheight = .3, vjust = 1),
     panel.spacing = unit(.6, "cm"),
   ) +
   plot_annotation(
     title = toupper("Bechdel test scores among\ntop 10 film genres"),
     subtitle = glue::glue(
-      "Films pass the Bechdel Test if they clear the low bar of:<br>
-       <b style = 'color:'#e9c46a'>* Including at least two named women...</b><br>
-       <b style = 'color:'#2a9d8f'>* ...who have a conversation</b><br>
-       <b style = 'color:'#264653'>* ...that's not about a male character</b><br>
-       Or, of course, films may just ","<b style = 'color:'#f4a261'>fail</b>."
+       "Films pass the Bechdel Test if they clear the nearly subterraneanly low bar of:
+       <br><b style='color:#f4a261;'>Including at least two named women...</b>
+       <br><b style='color:#2a9d8f;'>...who have a conversation...</b>
+       <br><b style='color:#264653;'>...that's not about a male character.</b>
+       <br>Or, of course, films may just <b style = 'color:#e76f51'>completely fail</b>."
     ),
-    caption = "Source: FiveThirtyEight, Bechdeltest.com, & imdb.com  |  Viz: Xin Yuen @so_xinteresting",
+    caption = "Note: Each square represents 10 films  |  Source: FiveThirtyEight, Bechdeltest.com, & imdb.com  |  Viz: Xin Yuen @so_xinteresting",
     theme = theme(
       plot.title = element_text(face = "bold", size = 80, margin = margin(t = 25), lineheight = .3),
-      plot.caption = element_text(size = 20, color = "gray50", hjust = 0),
-      plot.subtitle = element_text(family = "robo-slab", size = 30, lineheight = .3, margin = margin(t = 5, b = -20)),
+      plot.caption = element_text(family = "robo-slab", size = 20, color = "gray50", hjust = .5),
+      plot.subtitle = ggtext::element_markdown(family = "robo-slab", size = 27, lineheight = .5, margin = margin(t = 10, b = -85)),
       plot.background = element_rect(fill = "#dee3e3", color = NA)))
 
 
-ggsave("test.png", width = 10, height = 5, units = "in")
+ggsave("2021_week-11_bechdel.png", width = 10, height = 5, units = "in")
