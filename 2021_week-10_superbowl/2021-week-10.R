@@ -1,8 +1,7 @@
 library(tidyverse)
 library(showtext)
 library(patchwork)
-library(ggtext)
-library(emo)
+
 
 font_add_google("Montserrat", "mont")
 font_add_google("Roboto Slab", "robo")
