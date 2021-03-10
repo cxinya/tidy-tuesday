@@ -81,7 +81,7 @@ genre_bechdel %>% ggplot() +
     theme = theme(
       plot.title = element_text(face = "bold", size = 80, margin = margin(t = 25), lineheight = .3),
       plot.caption = element_text(family = "robo-slab", size = 20, color = "gray50", hjust = .5),
-      plot.subtitle = ggtext::element_markdown(family = "robo-slab", size = 27, lineheight = .5, margin = margin(t = 10, b = -85)),
+      plot.subtitle = ggtext::element_markdown(family = "robo-slab", size = 30, lineheight = .5, margin = margin(t = 10, b = -85)),
       plot.background = element_rect(fill = "#dee3e3", color = NA)))
 
 
