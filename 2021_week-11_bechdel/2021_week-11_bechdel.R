@@ -1,7 +1,11 @@
 library(tidyverse)
 library(waffle)
 library(showtext)
+library(patchwork)
 
+font_add_google("Roboto", "robo")
+font_add_google("Roboto Slab", "robo-slab")
+showtext_auto()
 
 # Data --------------------------------------------------------------------
 
@@ -27,7 +31,8 @@ genre_bechdel <- movies %>%
   left_join(select(raw_bechdel, imdb_id, rating)) %>% 
   drop_na(genre, rating) %>% 
   group_by(genre) %>% 
-  count(rating)
+  count(rating) %>% 
+  mutate(genre = toupper(ifelse(genre == "Adventure", "Advent-\nure", genre)))
 
 top10_genres <- genre_bechdel %>% 
   summarize(tot_films = sum(n)) %>% 
@@ -43,12 +48,41 @@ genre_bechdel <- genre_bechdel %>%
 
 # Viz ---------------------------------------------------------------------
 
+pal <- c("#f4a261","#e9c46a","#2a9d8f","#264653")
+
 
 genre_bechdel %>% ggplot() +
   facet_wrap(~genre, nrow = 1, strip.position = "bottom") +
   geom_waffle(
-    aes(values = n, fill = rating),
-    n_rows = 10, size = .35, colour = "white", flip = T, show.legend = F) +
-  coord_equal()
+    aes(values = n/10, fill = rating),
+    n_rows = 4, size = .45, colour = "#dee3e3", flip = T, show.legend = F) +
+  coord_equal() +
+  scale_fill_manual(values = pal) +
+  scale_x_discrete(expand = c(0,0)) +
+  scale_y_discrete(expand = c(0,0)) +
+  theme_void() +
+  theme(
+    text = element_text(family = "robo"),
+    plot.margin = margin(b = -5, r = 25, l = 25),
+    plot.background = element_rect(fill = "#dee3e3", color = NA),
+    strip.text = element_text(face = "bold", size = 34, margin = margin(t = 7), lineheight = .3, vjust = 1),
+    panel.spacing = unit(.6, "cm"),
+  ) +
+  plot_annotation(
+    title = toupper("Bechdel test scores among\ntop 10 film genres"),
+    subtitle = glue::glue(
+      "Films pass the Bechdel Test if they clear the low bar of:<br>
+       <b style = 'color:'#e9c46a'>* Including at least two named women...</b><br>
+       <b style = 'color:'#2a9d8f'>* ...who have a conversation</b><br>
+       <b style = 'color:'#264653'>* ...that's not about a male character</b><br>
+       Or, of course, films may just ","<b style = 'color:'#f4a261'>fail</b>."
+    ),
+    caption = "Source: FiveThirtyEight, Bechdeltest.com, & imdb.com  |  Viz: Xin Yuen @so_xinteresting",
+    theme = theme(
+      plot.title = element_text(face = "bold", size = 80, margin = margin(t = 25), lineheight = .3),
+      plot.caption = element_text(size = 20, color = "gray50", hjust = 0),
+      plot.subtitle = element_text(family = "robo-slab", size = 30, lineheight = .3, margin = margin(t = 5, b = -20)),
+      plot.background = element_rect(fill = "#dee3e3", color = NA)))
+
 
 ggsave("test.png", width = 10, height = 5, units = "in")
