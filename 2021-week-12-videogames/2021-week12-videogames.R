@@ -46,9 +46,9 @@ clouds <- farm %>% distinct(gamename) %>%
     cloud1 = str_glue("pics/cloud-{sample(1:4, 1)}.png"),
     cloud2 = str_glue("pics/cloud-{sample(1:4, 1)}.png"), 
     cloud1_x = runif(1, 0, 12),
-    cloud1_y = runif(1, 3.5, 7) * 10000, 
+    cloud1_y = runif(1, 4, 6.5) * 10000, 
     cloud2_x = runif(1, 0, 12),
-    cloud2_y = runif(1, 3.5, 7) * 10000)
+    cloud2_y = runif(1, 4, 6.5) * 10000)
   
 
 
