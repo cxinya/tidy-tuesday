@@ -32,7 +32,7 @@ test <- issues %>%
 issues_yr %>%
   # filter(year < 1950) %>%
   ggplot(aes(x = year, y = n, fill = issue)) +
-  geom_stream(bw = 1, extra_span = .2, true_range = "none") +
+  geom_stream(bw = .8, extra_span = .1) +
   scale_fill_manual(values = pal) +
   theme_minimal() +
   theme(
@@ -44,4 +44,4 @@ issues_yr %>% ggplot(aes(x = year, y = n, color = issue, group = issue)) +
 
 
 
-ggsave("2021_week-13_un-votes_outtake2.png", width = 8, height = 5)
+ggsave("2021_week-13_un-votes_outtake3.png", width = 8, height = 5)
