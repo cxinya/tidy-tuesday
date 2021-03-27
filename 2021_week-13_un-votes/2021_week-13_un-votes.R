@@ -81,7 +81,7 @@ us_match_year_plot <- us_match_year %>%
       x = ifelse(year %% 10 == 0, year, NA),
       y = 0,
       label = ifelse(year %% 10 == 0, year, "")),
-    family = "pop", size = 8, fontface = "bold", color = "#0C274F", angle = 90, hjust = 0) +
+    family = "pop", size = 9, fontface = "bold", color = "#0C274F", angle = 90, hjust = 0) +
   scale_fill_manual(values = pal) +
   scale_color_manual(values = pal) +
   scale_x_continuous(expand = c(0,0)) +
@@ -124,25 +124,26 @@ us_match_topic_plot <- us_match %>%
 # Combine plots
 
 us_match_year_plot / us_match_topic_plot +
-  plot_layout(heights = unit(c(1.25, 3), "in")) +
+  plot_layout(heights = unit(c(1.5, 3), "in")) +
   plot_annotation(
-    title = toupper("U n i t e d  S t a t e s\nv s .\nt h e  W i l l   o f  t h e   W o r l d"),
-    subtitle = str_wrap(glue::glue("
-      Each United Nations vote that resulted in a decision was contrasted against the United State's vote.<br>
-      The United States could either
-       <b style='color:#5b92e5;'>AGREE with</b>,
-       <b style='color:#B5BFC8;'>DISAGREE with</b>, or
-       <b style='color:#E6DC5C;'>ABSTAIN from commenting on </b><br>
-      the will of the United Nations. Results are presented by vote year and, when available, resolution topic.<br>
-      <b>The United States has stood in opposition to the United Nations more and more frequently</b>, particularly regarding the Palestinian conflict.
-      "), 100),
+    title = toupper("T h e  U n i t e d  S t a t e s\nv s .\nt h e  W i l l   o f  t h e   W o r l d"),
+    subtitle = glue::glue("
+      Each United Nations vote that resulted in a decision was contrasted against the United States' vote.<br>
+      The US could either
+       <b style='color:#5b92e5;'>AGREE with,</b>
+       <b style='color:#B5BFC8;'>DISAGREE with,</b> or
+       <b style='color:#E6DC5C;'>ABSTAIN from commenting on</b>
+      the will of the UN.<br>
+      Results are presented by vote year (top) and, when available, by resolution topic (bottom).<br>
+      <b>The US stands in opposition to most of the world more and more frequently.</b>.
+      "),
     caption = "Source: Harvard Dataverse  |  Viz: Xin Yuen, @so_xinteresting  |  #Tidy Tuesday",
     theme = theme(
       text = element_text(family = "pop"),
-      plot.title = element_text(face = "bold", size = 80, margin = margin(t = 15), lineheight = .3, hjust = .5),
-      plot.subtitle = ggtext::element_markdown(size = 30, lineheight = .5, margin = margin(t = 10, b = 15)),
-      plot.caption = element_text(size = 20, color = "gray50", hjust = .5, margin = margin(t = 7, b = 7)),
+      plot.title = element_text(face = "bold", size = 90, margin = margin(t = 25), lineheight = .3, hjust = .5),
+      plot.subtitle = ggtext::element_markdown(size = 33, hjust = .5, lineheight = .6, margin = margin(t = 15, b = 18)),
+      plot.caption = element_text(size = 25, color = "gray50", hjust = .5, margin = margin(t = 10, b = 7)),
       plot.background = element_rect(fill = "white", color = NA)))
 
 
-ggsave("test.png", width = 8, height = 7)
+ggsave("2021_week-13_un-votes.png", width = 8, height = 8)
