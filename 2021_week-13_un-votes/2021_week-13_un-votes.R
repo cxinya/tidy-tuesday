@@ -131,8 +131,8 @@ us_match_year_plot / us_match_topic_plot +
       Each United Nations vote that resulted in a decision was contrasted against the United States' vote.<br>
       The US could either
        <b style='color:#5b92e5;'>AGREE with,</b>
-       <b style='color:#B5BFC8;'>DISAGREE with,</b> or
-       <b style='color:#E6DC5C;'>ABSTAIN from commenting on</b>
+       <b style='color:#E6DC5C;'>DISAGREE with,</b> or
+       <b style='color:#B5BFC8;'>ABSTAIN from commenting on</b>
       the will of the UN.<br>
       Results are presented by vote year (top) and, when available, by resolution topic (bottom).<br>
       <b>The US stands in opposition to most of the world more and more frequently.</b>.
