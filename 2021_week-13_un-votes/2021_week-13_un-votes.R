@@ -11,37 +11,97 @@ issues <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tid
 # US vs the world
 
 
-pal <- c("#042A2B", "#5EB1BF", "#83A8A6", "#CDEDF6", "#EF7B45", "#772E25")
-pal2 <- c("#022B3A", "1F7A8C", "#6FABC2", "#BFDBF7", "#E1E5F2", "#B5BFC8")
+pal <- c("#5b92e5", "#B5BFC8", "#E6DC5C")
 
 
-issues_yr <- issues %>%
-  left_join(select(roll_calls, rcid, date)) %>%
-  separate(date, into = c("year", "month", "day")) %>%
-  group_by(year) %>%
-  count(issue) %>%
+
+
+# US vs the world ---------------------------------------------------------
+
+# Votes per resolution
+
+vote_res <- unvotes %>%
+  group_by(rcid) %>%
+  count(vote) %>%
+  group_by(rcid) %>%
+  mutate(per = n / sum(n) * 100) %>%
+  ungroup() %>%
+  select(-n) %>%
+  pivot_wider(
+    names_from = vote,
+    values_from = per
+  ) %>%
+  replace(is.na(.), 0) %>%
+  left_join(select(roll_calls, rcid, importantvote)) %>%
+  filter(!is.na(importantvote)) %>%
   mutate(
-    year = as.numeric(year),
-    per = n / sum(n) * 100)
+    result = case_when(
+      importantvote == 0 & (no == 50 | yes == 50)       ~ "No decision",
+      importantvote == 1 & (no <= 200/3 & yes <= 200/3) ~ "No decision",
+      abstain < 50 & no < 50 & yes < 50 ~ "No decision",
+      abstain >= 50                     ~ "No decision",
+      importantvote == 0 & no > 50      ~ "Fail",
+      importantvote == 1 & no > 200/3   ~ "Fail",
+      importantvote == 0 & yes > 50     ~ "Pass",
+      importantvote == 1 & yes > 200/3  ~ "Pass"))
 
-test <- issues %>%
+# Add US votes and see how they match
+us_match <- vote_res %>%
+  left_join(filter(unvotes, country_code == "US")) %>%
+  mutate(
+    us_vs_world = factor(case_when(
+      vote == "abstain" ~ "Abstained",
+      vote == "yes" & result == "Pass" ~ "Match",
+      vote == "no"  & result == "Fail" ~ "Match",
+      vote == "no"  & result == "Pass" ~ "Mismatch",
+      vote == "yes" & result == "Fail" ~ "Mismatch"
+  ), levels = c("Match", "Abstained", "Mismatch"))) %>%
+  left_join(select(issues, -short_name)) %>%
   left_join(select(roll_calls, rcid, date)) %>%
-  separate(date, into = c("year", "month", "day"))
+  mutate(year = lubridate::year(date)) %>%
+  filter(!is.na(country_code) & result != "No decision")
 
 
-issues_yr %>%
-  # filter(year < 1950) %>%
-  ggplot(aes(x = year, y = n, fill = issue)) +
-  geom_stream(bw = .8, extra_span = .1) +
-  scale_fill_manual(values = pal) +
-  theme_minimal() +
+# Match/mismatch by year --------------------------------------------------
+
+us_match_year <- us_match %>%
+  group_by(year) %>%
+  count(us_vs_world) %>%
+  group_by(year) %>%
+  mutate(per = n / sum(n) * 100)
+
+us_match_year %>%
+  ggplot(aes(x = year, y = per, fill = us_vs_world, color = us_vs_world)) +
+  geom_bar(position = "stack", stat = "identity") +
+  # geom_stream(bw = .8, alpha = .9, size = 1) +
+  # geom_stream_label(
+  #   aes(label = us_vs_world),
+  #   lineheight = .5, fontface = "bold") +
+  scale_fill_manual(values = pal3) +
+  scale_color_manual(values = pal3) +
+  scale_x_continuous(breaks = seq(1945, 2020, 5), labels = seq(1945, 2020, 5)) +
+  theme_minimal()
+
+
+# Mass/mismatch by topic --------------------------------------------------
+
+us_match_topic <- us_match %>%
+  filter(!is.na(issue) & rcid < 6000) %>%
+  ggplot() +
+  facet_wrap(vars(issue), ncol = 1) +
+  geom_segment(
+    aes(x = rcid, xend = rcid, y = 0, yend = 1, color = us_vs_world),
+    size = 1
+  ) +
+  geom_text(
+    aes(x = 0, y = .05, label = toupper(issue)),
+    vjust = 0, hjust = 0, fontface = "bold", size = 10, color = "#0C274F") +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_color_manual(values = rev(pal3)) +
+  theme_void() +
   theme(
-    legend.position = "none"
+    strip.text = element_blank(),
+    legend.position = "none",
+    panel.spacing = unit(0, "lines")
   )
-
-issues_yr %>% ggplot(aes(x = year, y = n, color = issue, group = issue)) +
-  geom_line()
-
-
-
-ggsave("2021_week-13_un-votes_outtake3.png", width = 8, height = 5)
