@@ -134,10 +134,10 @@ us_match_year_plot / us_match_topic_plot +
        <b style='color:#E6DC5C;'>DISAGREE with,</b> or
        <b style='color:#B5BFC8;'>ABSTAIN from commenting on</b>
       the will of the UN.<br>
-      Results are presented by vote year (top) and, when available, by resolution topic (bottom).<br>
+      Results are presented by vote <b>year</b> (top) and, when available, by <b>resolution topic</b> (bottom).<br>
       <b>The US stands in opposition to most of the world more and more frequently.</b>.
       "),
-    caption = "Source: Harvard Dataverse  |  Viz: Xin Yuen, @so_xinteresting  |  #Tidy Tuesday",
+    caption = "Source: Harvard Dataverse  |  Viz: Xin Yuen, @so_xinteresting  |  #TidyTuesday",
     theme = theme(
       text = element_text(family = "pop"),
       plot.title = element_text(face = "bold", size = 90, margin = margin(t = 25), lineheight = .3, hjust = .5),
