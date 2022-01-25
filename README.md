@@ -1,5 +1,12 @@
 # tidy-tuesday
 
+
+# 2022, Week 2: Bee colony losses
+
+<img src="https://github.com/cxinya/tidy-tuesday/blob/main/2022_week-02_bees/2022-week02-bees.png?raw=true" height="500"/>
+
+[[code](https://github.com/cxinya/tidy-tuesday/tree/main/2022_week-02_bees)]
+
 # 2021, Week 13: United Nations Votes
 
 <img src="https://github.com/cxinya/tidy-tuesday/blob/main/2021_week-13_un-votes/2021_week-13_un-votes.png?raw=true" height="500"/>
