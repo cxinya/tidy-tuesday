@@ -27,6 +27,7 @@
 
 # 2021, Week 10: Superbowl Ads
 
-<img src="https://github.com/cxinya/tidy-tuesday/blob/main/2021_week-10_superbowl/2021-week-10-superbowl.png?raw=true" height="500"/>
+<img src="https://github.com/cxinya/tidy-tuesday/blob/main/2021_week-10_superbowl/2021-week-10-superbowl.png?raw=true" height="500"
+alt="Bar graphs displaying the proportion of 10 different brands' Super Bowl ads from 2000-2020 that incorporate various themes.">
 
 [[code](https://github.com/cxinya/tidy-tuesday/tree/main/2021_week-10_superbowl)]
