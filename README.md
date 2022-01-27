@@ -1,5 +1,12 @@
 # tidy-tuesday
 
+# 2022, Week 4: Board games
+
+<img src="https://github.com/cxinya/tidy-tuesday/blob/main/2022_week-04_boardgames/2022-week04-boardgames.png?raw=true" height="500"
+alt="Scatterplots showing the average scores of board games created by the five most prolific game designers. The highest and lowest scoring games are highlighted."/>
+
+[[code](https://github.com/cxinya/tidy-tuesday/blob/main/2022_week-04_boardgames/2022_week-04_boardgames.R))]
+
 
 # 2022, Week 2: Bee colony losses
 
