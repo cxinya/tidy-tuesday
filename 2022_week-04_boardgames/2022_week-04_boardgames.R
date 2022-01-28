@@ -88,7 +88,9 @@ df %>% ggplot(aes(x = year, y = average)) +
   scale_y_continuous(limits = c(4, 9)) +
   theme_void() +
   theme(
-    plot.background = element_rect(fill = "#0c1618"),
+    plot.background = element_rect(
+      color = NA,
+      fill = "#0c1618"),
     legend.position = "none",
     strip.text = element_text(
       color = "#D7E7EA",
